@@ -496,14 +496,14 @@ header.entry-header {
     max-width: 100%;
 }
 
-.entry-content h1, .entry-content h2 {
+.entry-content h2, .entry-content h3 {
     font-family: 'Raleway';
     font-weight: 500;
     font-size: 36px;
     color: #0088A1;
     text-transform: uppercase;
 }
-.entry-content h2 {
+.entry-content h3 {
     font-size: 32px;
     font-weight: normal;
 }
