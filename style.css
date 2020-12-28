@@ -19,6 +19,12 @@ body {
     font-family: 'Open Sans';
 }
 
+/* Parent varia theme "resets" this to zero. Put it back to sensible default */
+p, li {
+    margin-bottom: 1rem;
+    font-size: 16px;
+}
+
 p,
 p a{
 	color:#213C34;
@@ -33,6 +39,16 @@ div.vce-row-container {
 }
 .home-sec1-col h2{
 	text-align:center;
+}
+.entry-content .home-sec1-txt h1 {
+    color: inherit;
+    font-weight: bold;
+    border-bottom: 1px dashed rgba(0,0,0,.35); /*hsla(0,0%,100%,.5);*/
+    padding-bottom: 20px;
+}
+.entry-content .vce-col-inner h2 {
+    font-weight: bold;
+    text-align: center;
 }
 .home-sec1-txt h4 {
     margin-top: 50px;
@@ -55,7 +71,8 @@ div.vce-row-container {
     border-top: 12px solid #b4dfd1;
 }
 .home-sec3-txt h4 {
-    font-size: 20px;
+    font-size: 18px;
+    text-align: center;
     margin: auto;
     margin-bottom: 40px;
     margin-top: 10px;
@@ -186,6 +203,9 @@ ul.sub-menu {
     padding-left: 0px;
     width: 194px;
     z-index: 9999;
+}
+ul#menu-primary .sub-menu li.menu-item {
+    padding-bottom: 0px;
 }
 .navigation-menu{
     margin-top: auto;
