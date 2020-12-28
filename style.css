@@ -443,7 +443,7 @@ label#toggle-menu {
         text-align: center;
         padding: 18px;
     }
-    div#navigation-mobile-inner ul a{
+    div#navigation-mobile-inner ul.main-menu > li > a{
         color: #fff;
     }
     .site-logo {
