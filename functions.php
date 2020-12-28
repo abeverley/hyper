@@ -8,25 +8,22 @@ Note: this function loads the parent stylesheet before, then child theme stylesh
 (leave it in place unless you know what you are doing.)
 */
 
-add_filter( 'jetpack_sharing_counts', '__return_false', 99 );
-add_filter( 'jetpack_implode_frontend_css', '__return_false', 99 );
-
 if ( ! function_exists( 'suffice_child_enqueue_child_styles' ) ) {
-        function varia_child_enqueue_child_styles() {
-            // loading parent style
-            wp_register_style(
-              'parente2-style',
-              get_template_directory_uri() . '/style.css'
-            );
+    function varia_child_enqueue_child_styles() {
+        // loading parent style
+        wp_register_style(
+            'parente2-style',
+            get_template_directory_uri() . '/style.css'
+        );
 
-            wp_enqueue_style( 'parente2-style' );
-            // loading child style
-            wp_register_style(
-              'childe2-style',
-              get_stylesheet_directory_uri() . '/style.css'
-            );
-            wp_enqueue_style( 'childe2-style');
-         }
+        wp_enqueue_style( 'parente2-style' );
+        // loading child style
+        wp_register_style(
+            'childe2-style',
+            get_stylesheet_directory_uri() . '/style.css'
+        );
+        wp_enqueue_style( 'childe2-style');
+    }
 }
 add_action( 'wp_enqueue_scripts', 'varia_child_enqueue_child_styles' );
 
@@ -40,7 +37,6 @@ function enqueue_custom_css() {
        wp_enqueue_style('MarkerCluster-Default','https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css');
        wp_enqueue_style('MarkerCluster','https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css');
 
-       wp_enqueue_style('style-map',get_stylesheet_directory_uri().'/style-map.css', array('MarkerCluster'));
    }
 }
 add_action('wp_enqueue_scripts', 'tutsplus_enqueue_custom_js');
@@ -50,6 +46,10 @@ function tutsplus_enqueue_custom_js() {
         wp_enqueue_script('markercluster.js', 'https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js', array(), false, true);
         wp_enqueue_script('jquery','https://code.jquery.com/jquery-3.5.1.min.js', array('jquery'), '3.5.1', true);
         wp_enqueue_script('map', get_stylesheet_directory_uri().'/scripts/map.js', array('jquery'), '3.5.1', true);
+        // In order for this stylesheet to work (and not be overridden by
+        // external CSS) it needs to be excluded in Jetpack from those scripts
+        // that are concatenated together
+        wp_enqueue_style('style-map',get_stylesheet_directory_uri().'/style-map.css', array('MarkerCluster'));
     }
 }
 
