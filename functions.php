@@ -23,6 +23,8 @@ if ( ! function_exists( 'suffice_child_enqueue_child_styles' ) ) {
             get_stylesheet_directory_uri() . '/style.css'
         );
         wp_enqueue_style( 'childe2-style');
+
+        wp_enqueue_style('Raleway-font','https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;700&display=swap');
     }
 }
 add_action( 'wp_enqueue_scripts', 'varia_child_enqueue_child_styles' );
