@@ -90,3 +90,47 @@ function varia_widgets3_init() {
 
 }
 add_action( 'widgets_init', 'varia_widgets3_init' );
+
+function my_pmprorh_init()
+{
+    //don't break if Register Helper is not loaded
+    if(!function_exists("pmprorh_add_registration_field"))
+    {
+        return false;
+    }
+    //define the fields
+    $fields = array();
+
+    $fields[] = new PMProRH_Field(
+        "First name(s)",
+        "text"
+    );
+    $fields[] = new PMProRH_Field(
+        "Surname",
+        "text"
+    );
+    $fields[] = new PMProRH_Field(
+        "Address",
+        "text"
+    );
+    $fields[] = new PMProRH_Field(
+        "Postcode",
+        "text"
+    );
+    $fields[] = new PMProRH_Field(
+        "I would like to volunteer to be a HyPER rep for my street/area",
+        "checkbox"
+        //array(
+        //    "text" => "Yes, I would like to be a rep"
+        //)
+    );
+
+    foreach($fields as $field)
+        pmprorh_add_registration_field(
+            "checkout_boxes", // location on checkout page
+            $field
+        );
+}
+add_action("init", "my_pmprorh_init");
+// This should hide billing information fields but does not seem to work
+apply_filters( 'pmpro_hide_billing_address_fields', true);
