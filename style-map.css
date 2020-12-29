@@ -3,3 +3,7 @@
 .marker-cluster-small { background-color: rgb(66, 135, 245, 0.5); }
 .marker-cluster-medium div { background-color: rgb(66, 135, 245); }
 .marker-cluster-medium { background-color: rgb(66, 135, 245, 0.5); }
+
+.leaflet-popup-content p {
+    font-size: inherit; /* return generic page style sizing to popup default */
+}
