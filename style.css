@@ -40,6 +40,10 @@ div.vce-row-container {
 .home-sec1-col h2{
 	text-align:center;
 }
+.vce-col-content h1 {
+    font-size: 38px;
+}
+
 .entry-content .home-sec1-txt h1 {
     color: inherit;
     font-weight: bold;
