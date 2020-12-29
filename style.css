@@ -526,9 +526,19 @@ header.entry-header {
 }
 
 .wp-block-latest-posts > li > a {
-    padding-left: 20px;
-    color:#213C34;
+    color: #0088A1;
     text-decoration: none;
+    font-family: 'Raleway';
+    font-size: 32px;
+    font-weight: normal;
+}
+
+/* Wrap links after featured images in latest posts blocks. Relies on the
+ * featured image being 150px wide. */
+.wp-block-latest-posts > li > .wp-block-latest-posts__featured-image ~ a {
+    padding-left: 20px;
+    display: inline-block;
+    width: calc(100% - 150px);
 }
 
 .wp-block-latest-posts__post-full-content > p {
