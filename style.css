@@ -553,3 +553,8 @@ header.entry-header {
     .nav-links a:hover {
     color: #0088A1;
 }
+
+/* Hide messy prices in subscription plans. Add to item descriptions instead */
+.pms-subscription-plan-price {
+    display: none;
+}
