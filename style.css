@@ -558,3 +558,7 @@ header.entry-header {
 .pms-subscription-plan-price {
     display: none;
 }
+
+.nav-links {
+    display: none;
+}
