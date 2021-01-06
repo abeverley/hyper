@@ -90,3 +90,34 @@ function varia_widgets3_init() {
 
 }
 add_action( 'widgets_init', 'varia_widgets3_init' );
+
+/**
+ * Modify the "must_log_in" string of the comment form.
+ *
+ * @see http://wordpress.stackexchange.com/a/170492/26350
+ */
+/* Removed: this seems to be overridden by Jetpack
+add_filter( 'comment_form_defaults', function( $fields ) {
+    $fields['must_log_in'] = sprintf(
+        __( '<p class="must-log-in">
+                 You must <a href="%s">Register</a> or
+                 <a href="%s">Login</a> to post a comment.</p>'
+        ),
+        wp_registration_url(),
+        wp_login_url( apply_filters( 'the_permalink', get_permalink() ) )
+    );
+    return $fields;
+});
+ */
+
+// define the jetpack_must_log_in_to_comment callback
+function filter_jetpack_must_log_in_to_comment( $var ) {
+    // make filter magic happen here...
+    $var = 'To post a comment please <a href="%s">log in</a> using your HyPER membership username'
+        .' and password. If you have not yet joined HyPER please do so by going to the'
+        .' <a href="/join/">membership</a> page.';
+    return $var;
+};
+
+// add the filter
+add_filter( 'jetpack_must_log_in_to_comment', 'filter_jetpack_must_log_in_to_comment', 10, 1 );
