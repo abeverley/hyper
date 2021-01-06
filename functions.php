@@ -121,3 +121,17 @@ function filter_jetpack_must_log_in_to_comment( $var ) {
 
 // add the filter
 add_filter( 'jetpack_must_log_in_to_comment', 'filter_jetpack_must_log_in_to_comment', 10, 1 );
+
+// Allow SVG uploads
+function allow_svgimg_types($mimes) {
+  $mimes['svg'] = 'image/svg+xml';
+  return $mimes;
+}
+add_filter('upload_mimes', 'allow_svgimg_types');
+
+// Allow WEBP uploads
+function allow_webpimg_types($mimes) {
+  $mimes['webp'] = 'image/webp';
+  return $mimes;
+}
+add_filter('upload_mimes', 'allow_webpimg_types');
