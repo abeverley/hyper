@@ -554,6 +554,10 @@ header.entry-header {
     color: #0088A1;
 }
 
+.wp-block-newspack-blocks-homepage-articles article .post-thumbnail img {
+    width: 100%;
+}
+
 /* Hide messy prices in subscription plans. Add to item descriptions instead */
 .pms-subscription-plan-price {
     display: none;
