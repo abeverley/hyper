@@ -568,3 +568,9 @@ header.entry-header {
 .entry-footer, .nav-links, article.post .post-thumbnail {
     display: none;
 }
+
+/* Somewhere word-break is being set to break-all which is causing words in
+ * tables within posts to be broken */
+table td, table th, .wp-block-table td, .wp-block-table th {
+    word-break: normal;
+}
