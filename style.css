@@ -563,6 +563,8 @@ header.entry-header {
     display: none;
 }
 
-.nav-links {
+/* Hide various items: the footer on a post with date posted etc; the next/prev
+ * links; the main featured image when viewing a full post */
+.entry-footer, .nav-links, article.post .post-thumbnail {
     display: none;
 }
