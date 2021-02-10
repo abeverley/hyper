@@ -558,9 +558,9 @@ header.entry-header {
     width: 100%;
 }
 
-/* Hide messy prices in subscription plans. Add to item descriptions instead */
-.pms-subscription-plan-price {
-    display: none;
+/* Add some padding between the donation box and its description */
+.pms_pwyw_pricing {
+    margin-left: 10px !important;
 }
 
 /* Hide various items: the footer on a post with date posted etc; the next/prev
