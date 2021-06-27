@@ -568,6 +568,16 @@ header.entry-header {
 .entry-footer, .nav-links, article.post .post-thumbnail {
     display: none;
 }
+/* Restore images for Tales from Tyburnia posts and make them sensible width */
+article.category-tales-from-tyburnia .post-thumbnail {
+    display: inline;
+}
+article.category-tales-from-tyburnia .post-thumbnail img {
+    display: block;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 /* Somewhere word-break is being set to break-all which is causing words in
  * tables within posts to be broken */
