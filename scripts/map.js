@@ -12,9 +12,17 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
 }).addTo(mymap);
 
 function onEachFeature(feature, layer) {
-    var popupContent = '<u>' + feature.properties.status + '</u><br>'
-        + '<p>' + jQuery('<div />').text(feature.properties.comments1).html() + '</p>'
-        + '<p>' + jQuery('<div />').text(feature.properties.comments2).html() + '</p>';
+    var popupContent = '';
+    if (feature.properties.status) {
+        popupContent = popupContent + '<u>' + feature.properties.status + '</u><br>';
+    }
+    if (feature.properties.comments1) {
+        popupContent = popupContent + '<p>' + jQuery('<div />').text(feature.properties.comments1).html() + '</p>';
+    }
+    if (feature.properties.comments2) {
+        popupContent = popupContent + '<p>' + jQuery('<div />').text(feature.properties.comments2).html() + '</p>';
+    }
+
 
     if (feature.properties && feature.properties.popupContent) {
         popupContent += feature.properties.popupContent;
@@ -27,33 +35,53 @@ var markers1 = L.markerClusterGroup({maxClusterRadius:2});
 var markers2 = L.markerClusterGroup({maxClusterRadius:2});
 
 var icons = {
-    icon_pedestrian_fatal: L.icon({
-        iconUrl: '/images/iconmonstr-accessibility-2-32-black.png',
-        iconSize: [32, 32],
+    blue: new L.Icon({
+      iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
+      shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41]
     }),
-    icon_pedestrian_serious: L.icon({
-        iconUrl: '/images/iconmonstr-accessibility-2-32-red.png',
-        iconSize: [32, 32],
+    gold: new L.Icon({
+      iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-gold.png',
+      shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41]
     }),
-    icon_pedestrian_slight: L.icon({
-        iconUrl: '/images/iconmonstr-accessibility-2-32-amber.png',
-        iconSize: [32, 32],
+    orange: new L.Icon({
+      iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png',
+      shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41]
     }),
-    icon_cyclist_fatal: L.icon({
-        iconUrl: '/images/iconmonstr-bicycle-5-32-black.png',
-        iconSize: [32, 32],
+    yellow: new L.Icon({
+      iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-yellow.png',
+      shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41]
     }),
-    icon_cyclist_serious: L.icon({
-        iconUrl: '/images/iconmonstr-bicycle-5-32-red.png',
-        iconSize: [32, 32],
+    violet: new L.Icon({
+      iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-violet.png',
+      shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41]
     }),
-    icon_cyclist_slight: L.icon({
-        iconUrl: '/images/iconmonstr-bicycle-5-32-amber.png',
-        iconSize: [32, 32],
-    }),
-    other: L.icon({
-        iconUrl: '/images/iconmonstr-star-1-32-amber.png',
-        iconSize: [32, 32],
+    black: new L.Icon({
+      iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-black.png',
+      shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41]
     }),
     green: new L.Icon({
       iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
@@ -82,59 +110,104 @@ var icons = {
 };
 
 
-//L.marker([51.5, -0.09], {icon: greenIcon}).addTo(map);
-
 var layer1;
 var layer2;
 
-fetch("/wp-content//json/points.json")
-    .then(function(response) { return response.json() })
-    .then(function(json) {
-        // HPE
-        var layer1 = L.geoJSON([json], {
+// $ doesn't seem to be available for some reason
+jQuery(document).ready(function($){
+    var json_file = "/wp-content/json/" + $('#mapid').data('json');
+    console.log("file: "+json_file);
 
-            style: function (feature) {
-                return feature.properties && feature.properties.style;
-            },
-            filter: function (feature) { return feature.properties.hpe},
+    fetch(json_file)
+        .then(function(response) { return response.json() })
+        .then(function(json) {
 
-            onEachFeature: onEachFeature,
+            var overlayMaps = {};
+            var bounds;
+            $.each(json.layers, function(index, layer_json) {
+                var layer = L.geoJSON([layer_json.geojson], {
 
-            pointToLayer: function (feature, latlng) {
-                return L.marker(latlng, {
-                    icon: icons[feature.properties.icon],
+                    style: function (feature) {
+                        return feature.properties && feature.properties.style;
+                    },
+                    //filter: function (feature) { return feature.properties.hpe},
+
+                    onEachFeature: onEachFeature,
+
+                    pointToLayer: function (feature, latlng) {
+                        return L.marker(latlng, {
+                            icon: icons[feature.properties.icon],
+                        });
+                    }
                 });
-            }
+                var markers = L.markerClusterGroup({maxClusterRadius:2});
+                markers.addLayer(layer);
+                mymap.addLayer(markers);
+
+                var this_bounds = markers.getBounds();
+                if (!bounds) {
+                    bounds = this_bounds;
+                }
+                console.log(this_bounds);
+                bounds.extend(this_bounds.min);
+                bounds.extend(this_bounds.max);
+                overlayMaps[layer_json.name] = markers;
+            });
+            mymap.fitBounds([
+                [51.51664, -0.16218],
+                [51.51214, -0.17389]
+            ]);
+            //mymap.fitBounds(bounds);
+            console.log(bounds);
+            L.control.layers(null, overlayMaps,{collapsed:false}).addTo(mymap);
+
+            // HPE
+            /*
+            var layer1 = L.geoJSON([json.geojson], {
+
+                style: function (feature) {
+                    return feature.properties && feature.properties.style;
+                },
+                filter: function (feature) { return feature.properties.hpe},
+
+                onEachFeature: onEachFeature,
+
+                pointToLayer: function (feature, latlng) {
+                    return L.marker(latlng, {
+                        icon: icons[feature.properties.icon],
+                    });
+                }
+            });
+            markers1.addLayer(layer1);
+            mymap.addLayer(markers1);
+            mymap.fitBounds(markers1.getBounds());
+
+            // Others
+            var layer2 = L.geoJSON([json.geojson], {
+
+                style: function (feature) {
+                    return feature.properties && feature.properties.style;
+                },
+                filter: function (feature) { return ! feature.properties.hpe},
+
+                onEachFeature: onEachFeature,
+
+                pointToLayer: function (feature, latlng) {
+                    return L.marker(latlng, {
+                        icon: icons[feature.properties.icon],
+                    });
+                }
+            });
+            markers2.addLayer(layer2);
+            //mymap.addLayer(markers2);
+            //mymap.fitBounds(markers2.getBounds());
+            */
         });
-        markers1.addLayer(layer1);
-        mymap.addLayer(markers1);
-        mymap.fitBounds(markers1.getBounds());
 
-        // Others
-        var layer2 = L.geoJSON([json], {
+    //var overlayMaps = {
+    //        "Inside triangle": markers1,
+    //        "Outside triangle": markers2
+    //};
 
-            style: function (feature) {
-                return feature.properties && feature.properties.style;
-            },
-            filter: function (feature) { return ! feature.properties.hpe},
-
-            onEachFeature: onEachFeature,
-
-            pointToLayer: function (feature, latlng) {
-                return L.marker(latlng, {
-                    icon: icons[feature.properties.icon],
-                });
-            }
-        });
-        markers2.addLayer(layer2);
-        //mymap.addLayer(markers2);
-        //mymap.fitBounds(markers2.getBounds());
-    });
-
-var overlayMaps = {
-        "Inside triangle": markers1,
-        "Outside triangle": markers2
-};
-L.control.layers(null, overlayMaps,{collapsed:false}).addTo(mymap);
-
-var popup = L.popup();
+    var popup = L.popup();
+});
