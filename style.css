@@ -584,3 +584,7 @@ article.category-tales-from-tyburnia .post-thumbnail img {
 table td, table th, .wp-block-table td, .wp-block-table th {
     word-break: normal;
 }
+
+.wp-block-quote p {
+    font-size: 1.2rem;
+}
