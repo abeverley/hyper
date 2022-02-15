@@ -588,3 +588,10 @@ table td, table th, .wp-block-table td, .wp-block-table th {
 .wp-block-quote p {
     font-size: 1.2rem;
 }
+
+/* Remove incorrectly-forced thumbnail image size for recent posts plugin on homepage */
+.rpwwt-widget ul li img {
+    width: inherit !important;
+    height: inherit !important;
+
+}
