@@ -595,3 +595,13 @@ table td, table th, .wp-block-table td, .wp-block-table th {
     height: inherit !important;
 
 }
+
+/* Styling for news links on homepage */
+.rpwwt-widget a {
+    text-decoration: none;
+}
+.rpwwt-post-title {
+    color: #0088a1;
+    font-family: 'Open Sans';
+    font-size: 1.5rem;
+}
