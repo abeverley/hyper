@@ -32,7 +32,7 @@ add_action( 'wp_enqueue_scripts', 'varia_child_enqueue_child_styles' );
 /*Write here your own functions */
 add_action( 'wp_enqueue_scripts', 'enqueue_custom_css' );
 function enqueue_custom_css() {
-   if (is_page('ltn-consultation-responses') || is_page('ev-charging')) {
+   if (is_page('ltn-consultation-responses') || is_page('ev-charging') || is_page('hyper-membership-statistics')) {
         /*wp_enqueue_style( 'parent-style', get_template_directory_uri().'/style.css' );*/
        // wp_enqueue_style('bootstrap', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' );
        wp_enqueue_style('leaflet.css','https://unpkg.com/leaflet@1.5.1/dist/leaflet.css');
@@ -43,7 +43,7 @@ function enqueue_custom_css() {
 }
 add_action('wp_enqueue_scripts', 'tutsplus_enqueue_custom_js');
 function tutsplus_enqueue_custom_js() {
-    if (is_page('ltn-consultation-responses') || is_page('ev-charging')) {
+    if (is_page('ltn-consultation-responses') || is_page('ev-charging') || is_page('hyper-membership-statistics')) {
         wp_enqueue_script('leaflet.js', 'https://unpkg.com/leaflet@1.7.1/dist/leaflet.js', array(), false, true);
         wp_enqueue_script('markercluster.js', 'https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js', array(), false, true);
         wp_enqueue_script('jquery','https://code.jquery.com/jquery-3.5.1.min.js', array(), null, true);
